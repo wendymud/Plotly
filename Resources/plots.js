@@ -1,63 +1,37 @@
-//Plotly.newPlot("plotArea", [{x: [1, 2, 3], y: [10, 20, 30]}]);
-// var trace = {
-//     x: ["burrito", "pizza", "chicken"],
-//     y: [10, 18, 5],
-//     type: "bar"
-// };
+// Sort the data array using the greekSearchResults value
+data.sort(function(a, b) {
+  return parseFloat(b.greekSearchResults) - parseFloat(a.greekSearchResults);
+});
 
-// var layout = {
-//     title: "Luncheon Survey",
-//     xaxis: {title: "Food Option"},
-//     yaxis: {title: "Number of Respondents"}
-// };
-// Plotly.newPlot("plotArea", [trace], layout);
+// Slice the first 10 objects for plotting
+data = data.slice(0, 10);
 
-// var trace = {
-//     x: ["nonalcoholic beer", "nonalcoholic wine", "nonalcoholic martini", "nonalcoholic margarita", "ice tea", "nonalcoholic rum & coke", "nonalcoholic mai tai", "nonalcoholic gin & tonic"],
-//     y: [22.7, 17.1, 9.9, 8.7, 7.2, 6.1, 6.0, 4.6],
-//     type: "bar"
-//    };
-//    var data = [trace];
-//    var layout = {
-//     title: "'Bar' Chart",
-//     xaxis: { title: "Drinks"},
-//     yaxis: { title: "% of Drinks Ordered"}
-//    };
-//    Plotly.newPlot("plotArea", data, layout);
+// Reverse the array due to Plotly's defaults
+data = data.reverse();
 
-// var trace = {
-//     labels: ["nonalcoholic beer", "nonalcoholic wine", "nonalcoholic martini", "nonalcoholic margarita",
-//     "ice tea", "nonalcoholic rum & coke", "nonalcoholic mai tai", "nonalcoholic gin & tonic"],
-//     values: [22.7, 17.1, 9.9, 8.7, 7.2, 6.1, 6.0, 4.6],
-//     type: 'pie'
-//    };
-//    var data = [trace];
-//    var layout = {
-//     title: "'Pie' Chart",
-//    };
-//    Plotly.newPlot("plotArea", data, layout);
-
+// Trace1 for the Greek Data
 var trace1 = {
-    x: [1, 2, 3, 4],
-    y: [10, 15, 13, 17],
-    mode: 'markers',
-    type: 'scatter'
-  };
-  
-  var trace2 = {
-    x: [2, 3, 4, 5],
-    y: [16, 5, 11, 9],
-    mode: 'lines',
-    type: 'scatter'
-  };
-  
-  var trace3 = {
-    x: [1, 2, 3, 4],
-    y: [12, 9, 15, 12],
-    mode: 'lines+markers',
-    type: 'scatter'
-  };
-  
-  var data = [trace1, trace2, trace3];
-  
-  Plotly.newPlot('plotArea', data);
+  x: data.map(row => row.greekSearchResults),
+  y: data.map(row => row.greekName),
+  text: data.map(row => row.greekName),
+  name: "Greek",
+  type: "bar",
+  orientation: "h"
+};
+
+// data
+var data = [trace1];
+
+// Apply the group bar mode to the layout
+var layout = {
+  title: "Greek gods search results",
+  margin: {
+    l: 100,
+    r: 100,
+    t: 100,
+    b: 100
+  }
+};
+
+// Render the plot to the div tag with id "plot"
+Plotly.newPlot("plot", data, layout);
